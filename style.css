@@ -1,0 +1,7 @@
+.task_element{
+    display: flex;
+    background-color: azure;
+    justify-content: center;
+    align-items: flex-start;
+    
+}
