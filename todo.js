@@ -9,9 +9,13 @@
 
 function submits(e){
 	e.preventDefault();
-    tasks.set(curid,document.getElementById('one').value);
-    create_task(document.getElementById('one').value,curid);
-    curid++;
+    if(document.getElementById('one').value == "") {alert("Please enter the task");}
+    else
+    {   tasks.set(curid,document.getElementById('one').value);
+        create_task(document.getElementById('one').value,curid);
+        document.getElementById('one').value = "";
+        curid++;
+    }
 }
 
 function delete_task(id){
@@ -22,15 +26,18 @@ function delete_task(id){
 }
 function create_task(value,key)
 {
+    
     const tasklist=document.getElementById("task_list");
     var div_x=document.createElement("div");
     var para= document.createElement("p");
     var text= document.createTextNode(value);
+    para.className="task_text";
     para.appendChild(text);
     div_x.appendChild(para);
     var delbut = document.createElement("button");
-    var del_text=document.createTextNode("delete");
+    var del_text=document.createTextNode("Completed");
     delbut.id=key;
+    delbut.className="del_button";
     delbut.appendChild(del_text);
     delbut.onclick= function (e) {  delete_task(e.target.id); };
     div_x.appendChild(delbut);

@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form id="addform" action="todo.js">
-        <label id="user_name">username</label>
-        <input type="text" id="one" name="user" value="hi">
-        <input type="submit" id="submit" value="submit" >
+    <div class="todo"> 
+        <p>ToDo List</p>
+    </div>
+    <form id="addform" action="todo.js" class="form">
+        <label id="user_name">Enter the event</label>
+        <div style="padding-left: 50px; padding-right: 20px;"><input type="text" id="one" name="user" style="width: 1000px; height: 40px; "></div>
+        <input type="submit" id="submit" value="SAVE" style="background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;" >
     </form>
-    <div class="task">
-        <h2>task</h2>
+    <div >
+        <h2 class="task">Task</h2>
         <div class="task_list" id="task_list">
-
         </div>
     </div>
     <script src="todo.js"></script>
