@@ -15,15 +15,26 @@
         <div style="display: flex;"><label id="user_name" for="main_task">Enter the event:  </label>
         <input type="text" id="one" name="main_task" style="width: 500px; height: 40px; "></div>
 
-        <div><label>Deadline:  </label><input type="date" id="date"></input></div>
+        <div><label>Deadline:  </label><input type="date" id="date"></input> <label style="padding-left: 20px;">Add Catergory:  </label><input  id="Catergory"></input> </div>
         <div id="Subtask" style="display: flex; flex-direction: column;">
             <div><label>Enter Subtask:</label> <input id="subtask1"></input> <button id="add_subtask" type="button">+</button></div>
         </div>
+
         <input type="submit" id="submit" value="SAVE" style="background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;" >
     </form>
 
     <div>
-        <h2 class="task">Task</h2>
+        <div class="task" >
+            <h2 style="align-items: center;">Task</h2>
+            <form action="todo.js" id = 'catergory_form'style="margin-left: auto;";>
+                <label for="Catergory">Catergory</label>
+                <select name="Catergory" id="catergory">
+                    
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+              </form>
+        </div>
         <div class="task_list" id="task_list">
         </div>
     </div>

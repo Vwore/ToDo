@@ -4,9 +4,29 @@
     var data=document.getElementById('user_name');
     console.log(forms.one.value);
     forms.addEventListener('submit',submits);
+
+    //subtask
     var subtask_count=1;
     var add_subtask=document.getElementById("add_subtask");
     add_subtask.addEventListener('click',addsubtask);
+    
+    //catergory
+    var catergory=["all","general"];
+    catergory_form();
+    var form_id=document.getElementById('catergory_form');
+    form_id.addEventListener('submit',rerender)
+
+function catergory_form() {
+    var select_option = document.getElementById("catergory");
+    select_option.innerHTML="";
+    catergory.forEach(function (catergory_name){
+        var x=document.createElement("option");
+        var y=document.createTextNode(catergory_name);
+        x.value=catergory_name;
+        x.appendChild(y);
+        select_option.appendChild(x);
+    });
+};
 
 function addsubtask(e)
 {
@@ -23,20 +43,31 @@ function submits(e){
     if(document.getElementById('one').value == "") {alert("Please enter the task");}
     else
     {   
-        //task ={curid(key), [main task, date, subtask count,subtasks]}
-        tasks.set(curid,[document.getElementById('one').value,document.getElementById('date').value,subtask_count]);
+        //task ={curid(key), [main task, date, subtask ,catergory}
+        tasks.set(curid,[document.getElementById('one').value,document.getElementById('date').value,[]]);
         var array=tasks.get(curid);
-        for(let i=1;i<=array[2];i++)
+        for(let i=1;i<=subtask_count;i++)
         {
             // subtask element
             // console.log(document.getElementById("subtask"+i).value);
-            array.push(document.getElementById("subtask"+i).value);
+            array[2].push(document.getElementById("subtask"+i).value);
         }
+        let cat_value=document.getElementById("Catergory").value;
+        if(cat_value!="")  {
+            array.push(cat_value); 
+            if (!catergory.includes(cat_value)) {
+            catergory.push(cat_value);
+            }
+        }
+        else    {array.push("general")};
+        // console.log(array[3]);
         tasks.set(curid,array);
         // console.log((tasks.get(curid))[1]);
         create_task(tasks.get(curid),curid);
         document.getElementById('one').value = "";
+        document.getElementById("Catergory").value="";
         subtask_count=1;
+        catergory_form();
         curid++;
         var x= document.getElementById("Subtask");
         x.innerHTML="<div><label>Enter Subtask:</label> <input id='subtask1'></input> <button id='add_subtask' type='button'>+</button></div>";
@@ -52,8 +83,32 @@ function edit_submit(e){
     // console.log(e.target.parentElement.id);
     var y=tasks.get((Number)(e.target.parentElement.id));
     y[0]=x.value;
+    y[1]=document.getElementById("editdate").value;
+    y[3]=document.getElementById("editCatergory").value;
+    
+    let cat_value=document.getElementById("editCatergory").value;
+    console.log(cat_value+ "hi");
+    if(cat_value!="")  {
+        if (!catergory.includes(cat_value)) {
+            console.log("itempushed");
+        catergory.push(cat_value);
+        }
+    }
+    document.getElementById('catergory').value=cat_value;
     tasks.set((Number)(e.target.parentElement.id),y);
-    rerender();
+    catergory_form();
+    rerender(e);
+}
+function edit(id)
+{
+    // console.log('edit '+id);
+    var x=document.getElementById(id);
+    var y=document.getElementById(id+'1').textContent;
+    console.log(y);
+    // x.innerHTML="<form id='editform'><label>Enter the event</label><input id='editinput' }></input><input type='submit' value='SAVE' style='background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;' ></form>"; 
+    x.innerHTML="<form id='editform' action='todo.js' class='form'><div style='display: flex;'><label id='user_name' for='main_task'>Enter the event:  </label><input type='text' id='editinput' name='main_task' style='width: 500px; height: 40px; '></div><div><label>Deadline:  </label><input type='date' id='editdate'></input> <label style='padding-left: 20px;'>Add Catergory:  </label><input  id='editCatergory'></input> </div><div id='editSubtask' style='display: flex; flex-direction: column;'><div><label>Enter Subtask:</label> <input id='editsubtask1'></input> <button id='editadd_subtask' type='button'>+</button></div></div><input type='submit' id='editsubmit' value='SAVE' style='background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;' ></form>"
+    var edit_task=document.getElementById('editform');
+    edit_task.addEventListener('submit',edit_submit);
 }
 
 function delete_task(id){
@@ -62,16 +117,7 @@ function delete_task(id){
    console.log(tasks.size);
    rerender();
 }
-function edit(id)
-{
-    // console.log('edit '+id);
-    var x=document.getElementById(id);
-    var y=document.getElementById(id+'1').textContent;
-    console.log(y);
-    x.innerHTML="<form id='editform'><label>Enter the event</label><input id='editinput' }></input><input type='submit' value='SAVE' style='background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;' ></form>"; 
-    var edit_task=document.getElementById('editform');
-    edit_task.addEventListener('submit',edit_submit);
-}
+
 
 function create_task(value,key)
 {
@@ -98,12 +144,11 @@ function create_task(value,key)
     div_maintask.appendChild(date);
     div_y.appendChild(div_maintask);
 
-    for(let i=1;i<=value[2];i++)
+    for(let i=0;i<value[2].length;i++)
     {
-        console.log(value[2+i]);
         let subtask_p=document.createElement("li");
         subtask_p.className="subtask";
-        let subtask_text=document.createTextNode(value[2+i]);
+        let subtask_text=document.createTextNode(value[2][i]);
         subtask_p.appendChild(subtask_text);
         div_y.appendChild(subtask_p);
     }
@@ -131,13 +176,15 @@ function create_task(value,key)
     div_x.className="task_element";
     tasklist.appendChild(div_x);
 }
-function rerender()
+function rerender(e)
 {
-    console.log(typeof tasks);
+    e.preventDefault();
+    console.log('rerender '+ document.getElementById('catergory').value);
     document.getElementById('task_list').innerHTML="";
     tasks.forEach(function(value,key) 
     {
-        create_task(value,key);
+        if(document.getElementById('catergory').value==value[3] || document.getElementById('catergory').value=="all")
+        {create_task(value,key);}
     })
     console.log("stringify version");
     var xx=JSON.stringify(tasks);
