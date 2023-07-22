@@ -10,7 +10,7 @@
 .task_element{
     display: flex;
     background-color: rgb(0, 150, 167);
-    justify-content: evenly;
+    justify-content: space-evenly;
     align-items: center;   
     font-family:'Courier New', Courier, monospace;
     font-weight: 500;
@@ -24,6 +24,8 @@
 .task_div{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    flex-grow: 9;
 }
 
 .task{
@@ -61,9 +63,10 @@ body {
 }
 .form{
     padding-left: 50px;
-    display: flex;
-    height: 100px;
-    justify-content: stretch;
+    align-content: center;
+    /* display: flex; */
+    /* height: 100px; */
+    /* justify-content: stretch; */
     align-items: center;
     background-color: rgb(0, 136, 149);
     color: rgb(97, 213, 255);
@@ -71,4 +74,11 @@ body {
     font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
     margin: 0px;
+    /* flex-wrap: wrap; */
+    
+}
+.subtask{
+    font-size: 20pxgit ;
+    list-style-type: disc;
+    padding-left: 30px;
 }

@@ -9,13 +9,20 @@
     <div class="todo"> 
         <p>ToDo List</p>
     </div>
+
     <form id="addform" action="todo.js" class="form">
-        <label id="user_name">Enter the event</label>
-        <div style="padding-left: 50px; padding-right: 20px;"><input type="text" id="one" name="user" style="width: 1000px; height: 40px; "></div>
-        <div><input type="date" id="date"></input></div>
+
+        <div style="display: flex;"><label id="user_name" for="main_task">Enter the event:  </label>
+        <input type="text" id="one" name="main_task" style="width: 500px; height: 40px; "></div>
+
+        <div><label>Deadline:  </label><input type="date" id="date"></input></div>
+        <div id="Subtask" style="display: flex; flex-direction: column;">
+            <div><label>Enter Subtask:</label> <input id="subtask1"></input> <button id="add_subtask" type="button">+</button></div>
+        </div>
         <input type="submit" id="submit" value="SAVE" style="background-color: rgb(4, 105, 114); height: 35px; border-radius: 20px; color: white;" >
     </form>
-    <div >
+
+    <div>
         <h2 class="task">Task</h2>
         <div class="task_list" id="task_list">
         </div>
