@@ -21,6 +21,11 @@
     
 }
 
+.task_div{
+    display: flex;
+    flex-direction: column;
+}
+
 .task{
     display: flex;
     justify-content: center;
