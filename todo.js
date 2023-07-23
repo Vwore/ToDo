@@ -43,7 +43,7 @@ function submits(e){
     if(document.getElementById('one').value == "") {alert("Please enter the task");}
     else
     {   
-        //task ={curid(key), [main task, date, subtask ,catergory,completed}
+        //task ={curid(key), [main task, date, subtask ,catergory,completed,priority}
         tasks.set(curid,[document.getElementById('one').value,document.getElementById('date').value,[]]);
         var array=tasks.get(curid);
         for(let i=1;i<=subtask_count;i++)
@@ -61,6 +61,7 @@ function submits(e){
         }
         else    {array.push("general")};
         array.push(false);
+        array.push(document.getElementById('priority').value);
         // console.log(array[3]);
         tasks.set(curid,array);
         // console.log((tasks.get(curid))[1]);
@@ -222,8 +223,5 @@ function rerender(e)
         if(document.getElementById('catergory').value==value[3] || document.getElementById('catergory').value=="all")
         {create_task(value,key);}
     })
-    console.log("stringify version");
-    var xx=JSON.stringify(tasks);
-    localStorage.setItem("tasks",xx);
 
 }
