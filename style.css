@@ -56,7 +56,7 @@
 .task_text{
     padding-left: 10px;
     flex-grow: 12;
-    width: 1320px;
+    /* width: 1320px; */
 }
 body {
     margin: 0px;

@@ -43,7 +43,7 @@ function submits(e){
     if(document.getElementById('one').value == "") {alert("Please enter the task");}
     else
     {   
-        //task ={curid(key), [main task, date, subtask ,catergory}
+        //task ={curid(key), [main task, date, subtask ,catergory,completed}
         tasks.set(curid,[document.getElementById('one').value,document.getElementById('date').value,[]]);
         var array=tasks.get(curid);
         for(let i=1;i<=subtask_count;i++)
@@ -60,6 +60,7 @@ function submits(e){
             }
         }
         else    {array.push("general")};
+        array.push(false);
         // console.log(array[3]);
         tasks.set(curid,array);
         // console.log((tasks.get(curid))[1]);
@@ -128,9 +129,10 @@ function create_task(value,key)
     var div_x=document.createElement("div");
     var div_y=document.createElement("div");
     div_y.className="task_div";
+    
+    //maintask
     var div_maintask=document.createElement("div");
     div_maintask.style="display:flex; padding-right: 20px; align-items: center; font-size: 25px; font-weight:600;"
-
     var para= document.createElement("p");
     var text= document.createTextNode(value[0]);
     para.className="task_text";
@@ -141,9 +143,21 @@ function create_task(value,key)
     var date_text=document.createTextNode(value[1]);
     date.appendChild(date_text);
     date.style="font-size: 15px";
+    var checkbox=document.createElement("input");
+    var checkbox_label=document.createElement("label");
+    var checkbox_text= document.createTextNode("completed");
+    checkbox_label.appendChild(checkbox_text);
+    checkbox_label.for="4"+key;
+    checkbox_label.style="font-size: 15px;";
+    checkbox.type="checkbox";
+    checkbox.id=key+"4";
+
+    checkbox.onchange= function(e)  {checkbox_changed(e);};
     div_maintask.appendChild(date);
     div_y.appendChild(div_maintask);
-
+    
+    
+    //subtask
     for(let i=0;i<value[2].length;i++)
     {
         let subtask_p=document.createElement("li");
@@ -154,6 +168,8 @@ function create_task(value,key)
     }
 
     div_x.appendChild(div_y);
+    div_x.appendChild(checkbox_label);
+    div_x.appendChild(checkbox);
     div_x.id=key;
     //delete button
     var delbut = document.createElement("button");
@@ -176,9 +192,29 @@ function create_task(value,key)
     div_x.className="task_element";
     tasklist.appendChild(div_x);
 }
+
+function checkbox_changed(e){
+    e.preventDefault();
+    var id=e.target.id;
+    var parentid=(Number)(e.target.parentElement.id);
+    var x=document.getElementById(id);
+    if(x.checked){
+        (tasks.get(parentid))[4]=true;
+        var bgcolor=document.getElementById((String)(parentid));
+        bgcolor.style.backgroundColor="rgb(2, 83, 92)";
+    }
+    else{
+        console.log("unchecked");
+        (tasks.get(parentid))[4]=false;
+        var bgcolor=document.getElementById((String)(parentid));
+        bgcolor.style.backgroundColor="rgb(0, 150, 167)";
+        // tasks[parentid][4]=false;
+    }
+}
+
 function rerender(e)
 {
-    e.preventDefault();
+    if(e!=null)   {e.preventDefault();}
     console.log('rerender '+ document.getElementById('catergory').value);
     document.getElementById('task_list').innerHTML="";
     tasks.forEach(function(value,key) 
