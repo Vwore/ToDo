@@ -33,14 +33,49 @@
     <div>
         <div class="task" >
             <h2 style="align-items: center;">Task</h2>
-            <form action="todo.js" id = 'catergory_form'style="margin-left: auto;";>
-                <label for="Catergory">Catergory</label>
-                <select name="Catergory" id="catergory">
+            <form action="todo.js" id = 'filter_form' style="align-items: center; display: flex;";>
+                <p>Filter: </p>
+                <div class="filter_catergory">
+                <label for="Catergory">catergory</label>
+                <select name="Catergory" id="catergory" value="all">
                     
                 </select>
-                <br><br>
+                </div>
+                <div class="filter_priority">
+                    <label for="priority">priority</label>
+                    <select name="priority" id="priority_filter" value="none">
+                    <option value=3>high</option>
+                    <option value=2>medium</option>
+                    <option value=1>low</option>
+                    </select>
+                </div>
+                <div class="filter_date">
+                    <label>deadline:  </label>
+                    <input type="date" id="filter_date1"></input>
+                    <input type="date" id="filter_date2"></input>
+                </div>
                 <input type="submit" value="Submit">
-              </form>
+            </form>
+            
+            <form id="sort_form">
+                <div class="sort_input">
+                    <label for="sorting">Sort by:</label>
+                    <select name="sorting" id="sort_by" >
+                    <option value="priority">priority</option>
+                    <option value="deadline">deadline</option>
+                    </select>
+                    <input type="submit" value="Submit">
+
+                </div>
+            </form>
+            <div id="search">
+                <form>
+                <label>search</label>
+                <input type="text" id="search_input" oninput="search_value_changed()" ></input>
+                </form>
+            </div>
+
+
         </div>
         <div class="task_list" id="task_list">
         </div>
